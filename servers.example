@@ -1,0 +1,40 @@
+---
+:servers:
+  bob:
+    :ring: staging
+    :internal: dsffdf
+    :external: dfsdf
+    :roles:
+      - :db
+      - :app
+      - :web
+    :attr:
+      :primary: true
+  john:
+    :ring: staging
+    :internal: dsdfx
+    :external: dsfdx
+    :roles:
+      - :app
+      - :web
+  matt:
+    :ring: production
+    :internal: dsdfx
+    :external: dsfdx
+    :roles:
+      - :app
+      - :web
+
+:rings:
+  staging:
+    :globals:
+      :rails_env: staging
+    :server_refs:
+      - bob
+      - john
+
+  production:
+    :glocals:
+      :rails_env: production
+    :servers_refs:
+      - matt

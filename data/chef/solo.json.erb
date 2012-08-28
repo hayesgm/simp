@@ -1,0 +1,49 @@
+{
+	"set_fqdn": "illuminatedcomputing.com",
+	
+	"users": {
+		"ic": {
+			"id": "ic",
+			"uid": 2000,
+			"gid": 2000,
+			"password": "*",
+			"shell": "\/bin\/bash",
+			"comment": "Illuminated Computing"
+		},
+		"aw": {
+			"id": "aw",
+			"uid": 2001,
+			"gid": 2001,
+			"password": "*",
+			"shell": "\/bin\/bash",
+			"comment": "AngryWords"
+		}
+	},
+	
+	"rvm": { "script": "rvm-install-latest" },
+	
+	"passenger": {
+		"version": "3.0.11"
+  },
+	
+	"run_list": [
+		<%= recipes.map { |r| "\"recipe[#{r}]\"" }.join(",\n\t") %>
+		// "recipe[base]",
+		// "recipe[hostname]",
+		// "recipe[users]",
+		// "recipe[chronic]",
+		// "recipe[rvm::ruby_193]",
+		// "recipe[postgres]",
+		// "recipe[postgresql::server]",
+		// "recipe[psql_user]",
+		// "recipe[apache2]",
+		// "recipe[apache2::mod_php5]",
+		// "recipe[rails]",
+		// "recipe[passenger::apache2]",
+		// "recipe[passenger_apache2::mod_rails]",
+		// "recipe[memcached]",
+		// "recipe[ic]",
+		// "recipe[apartment-helper]",
+		// "recipe[aw]"
+	]
+}

@@ -1,0 +1,38 @@
+
+== install ruby ==
+
+# LibYAML
+mkdir -p /tmp/install/libyaml
+cd /tmp/install/libyaml
+wget http://pyyaml.org/download/libyaml/yaml-0.1.4.tar.gz
+tar xzvf yaml-0.1.4.tar.gz
+cd yaml-0.1.4
+./configure --prefix=/usr/local
+make
+make install
+
+# Ruby 1.9.3 p194
+mkdir -p /tmp/install/ruby
+cd /tmp/install/ruby
+wget http://ftp.ruby-lang.org/pub/ruby/1.9/ruby-1.9.3-p194.tar.gz
+tar xzvf ruby-1.9.3-p194.tar.gz
+cd ruby-1.9.3-p194
+./configure --prefix=/usr/local --enable-shared --disable-install-doc --with-opt-dir=/usr/local/lib
+make
+make install
+
+### or..
+
+# sudo apt-get install build-essential libssl-dev libreadline5 libreadline5-dev zlib1g zlib1g-dev
+# Or debian...
+
+yum -y install make gcc gcc-c++ kernel-devel openssl-devel readline readline-devel zlib zlib-devel
+
+sudo yum -y install gcc
+curl -L https://get.rvm.io | bash -s stable --ruby
+
+rvm pkg install zlib
+
+openssl
+
+# HOLY FUCK, GETTING CHEF UP WAS DIFFICULT

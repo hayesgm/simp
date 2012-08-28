@@ -1,0 +1,14 @@
+
+Lingering questions:
+
+How do we track rings / lb?
+We want to be able to really "track" servers, we'll need a config file..
+Why don't we make a YAML called servers.yml and these commands will affect that YAML
+We'll need to get smart about syncing
+
+Let's start by building out:
+
+simp config
+
+What does servers.yml look like?
+

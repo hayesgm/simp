@@ -1,0 +1,51 @@
+#!/usr/bin/env ruby
+
+$:.unshift File.expand_path("../../lib", File.symlink?(__FILE__) ? File.readlink(__FILE__) : __FILE__)
+require 'rubygems'
+require 'sexpistol'
+require 'fog'
+require 'erubis'
+
+require 'simp/simp'
+require 'simp/simp_obj'
+require 'simp/simp_errors'
+require 'simp/mod'
+require 'simp/server'
+require 'simp/simp_helper'
+require 'simp/simp_ring'
+require 'simp/simp_array'
+require 'simp/cli/simp_processor'
+require 'simp/cli/simp_context'
+require 'simp/cli/simp_cli'
+require 'simp/cli/simp_cloud'
+require 'simp/venues/bash'
+require 'simp/venues/chef'
+require 'simp/servers/local_server'
+require 'simp/servers/remote_server'
+args = ARGV
+
+=begin
+if !$stdin.tty?
+  $stdin.each_line do |line|
+    args.push(line)
+  end
+end
+=end
+
+prog = args.join(' ').gsub('[','(').gsub(']',')').gsub('=','"')
+prog = "(#{prog})" # if prog.strip[0] != '(' || prog.strip[-1] != ')' # Complete extra parens
+
+puts [ "Running simp", prog ]
+
+parser = Sexpistol.new
+expressions = parser.parse_string(prog)
+p expressions
+
+result = nil
+
+expressions.each do |expression|
+  result = SimpProcessor.evaluate(expression)
+  p [ "result", result ]
+end
+
+p result
