@@ -24,7 +24,7 @@ class SimpCloud
     
     # Micro - ami-ef5ff086 - t1.micro
     # Small - ami-0459bc6d - m1.small - with ruby?
-    # Small - ami-08f41161
+    # Small - ami-08f41161  
     ami = SimpHelper.select_mod(mods, :ami) || 'ami-ef5ff086'
     size = SimpHelper.select_mod(mods, :size) || 't1.micro'
     

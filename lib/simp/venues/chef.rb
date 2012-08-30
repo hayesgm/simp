@@ -36,26 +36,36 @@ class Chef < Venue
     
     # Simp.log server.run('ruby /tmp/boot.rb')
     
-    get_cookbook(server, 'git://github.com/37signals/37s_cookbooks.git', true)
+    build[:cookbooks].each do |cookbook|
+      get_cookbook(server, cookbook)
+    end
     
-    install_cookbooks(server, build[:recipes])
+    
+    install_recipes(server, build[:recipes])
     
   end
   
-  def get_cookbook(server, repo, here = false)
+  def get_cookbook(server, cookbook)
     server.run("mkdir -p ~/chef/cookbooks")
-    server.run("cd ~/chef/cookbooks && git clone #{repo} #{ here ? '.' : '' }")
+    o =  [('a'..'z'),('A'..'Z')].map{|i| i.to_a}.flatten
+    tmp_name = (0..10).map{ o[rand(o.length)] }.join
     
+    server.run("mkdir -p /tmp/#{tmp_name}")
+    server.run("cd /tmp/#{tmp_name} && git clone #{cookbook[:repo]} .")
+    server.run("cd /tmp/#{tmp_name} && cp -r #{ cookbook[:subdir] || '.'} ~/chef/cookbooks")
   end
   
-  def install_cookbooks(server, cookbooks)
+  def install_recipes(server, recipes)
     server.upload(File.expand_path("../../../../data/chef/solo.rb", __FILE__), '/home/ec2-user/chef/solo.rb')
     
-    solo_json = Erubis::Eruby.new(File.read(File.expand_path("../../../../data/chef/solo.json.erb", __FILE__))).result(recipes)
+    Simp.log server.run("mkdir -p ~/chef/roles")
+    server.upload(File.expand_path("../../../../data/chef/roles/server.rb", __FILE__), '/home/ec2-user/chef/roles/server.rb')
+    
+    solo_json = Erubis::Eruby.new(File.read(File.expand_path("../../../../data/chef/solo.json.erb", __FILE__))).result(:recipes => recipes)
     
     server.run("cat > ~/chef/solo.json <<EOF\n#{solo_json}\nEOF\n")
     
-    Simp.log server.run("chef-solo -c ~/chef.solo.rb -j ~/chef/solo.json")
+    Simp.log server.run("rvmsudo chef-solo -c ~/chef/solo.rb -j ~/chef/solo.json")
   end
   
   def installed?(server, app)

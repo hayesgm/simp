@@ -6,9 +6,9 @@ simp config --aws
 
 %+ Build a Rails server
  - simp build rails
-+ Build a named Rails server
+%+ Build a named Rails server
  - simp build rails =Rail Master=
-+ Build a Rails server with AMI xxx
+%+ Build a Rails server with AMI xxx
  - simp build rails [mod ami xxx]
 + Build a Rails server with Ruby 1.9.2
  - simp build rails [mod ruby =1.9.2=]

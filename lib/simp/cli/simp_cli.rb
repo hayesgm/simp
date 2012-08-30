@@ -12,7 +12,9 @@ module SimpCLIFunctions
   
   BUILD_MAP = {
     :mysql => { :venue => :chef, :recipes => [ 'http://github.com/opscode-cookbooks/mysql' ] },
-    :rails => { :venue => :chef, :recipes => [ 'rails' ] },
+    :rails => { :venue => :chef, :recipes => [ 'rails' ], :cookbooks => [ "git://github.com/opscode/cookbooks.git" ], :cookbooks_in_place => true },
+    :nodejs => { :venue => :chef, :recipes => [ 'cookbook-node' ], :cookbooks => [ "git://github.com/digitalbutter/cookbook-node.git" ] },
+    :rcrails => { :venue => :chef, :recipes => [ 'main'], :cookbooks => [ { :repo => 'https://github.com/railscasts/339-chef-solo-basics', :subdir => 'chef/cookbooks' } ] },
     :ruby => '/build/ruby',
     :nginx => '/build/nginx',
     :echo => { :venue => :bash, :cmd => '/bin/echo' },
