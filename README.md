@@ -4,7 +4,7 @@ Simp is a lifecycle management CLI meant to make running a server farm as easy a
 
 # CLI
 
-The Simp command-line is based on Lisp-syntax (with [] replacing () and == replacing "").  We did this to make the command-line fully potent (turing complete).  As an example:
+The Simp command-line is based on Lisp-syntax (with [] replacing () and ### replacing "").  We did this to make the command-line fully potent (turing complete).  As an example:
 
      simp build rails
 
@@ -28,7 +28,7 @@ bakes an "AMI" or appropriate server-image from a new rails +nginx server.
 
 # Tasks:
 
-==Building a Server
+###Building a Server
 
 %+ Build a Rails server
  - simp build rails
@@ -59,14 +59,14 @@ bakes an "AMI" or appropriate server-image from a new rails +nginx server.
 + Build an NGinx Web Server with Reverse Proxy to google.com
  - simp build nginx [mod proxy /google/\$1 google.com]
 
-==Spawning a Server
+###Spawning a Server
 
 %+ Spawn a normal server (default config)
  - simp spawn
 %+ Spawn a server with mods
  - simp spawn [mod os centos]
 
-==Getting servers
+###Getting servers
 
 %+ Get a remote server by name
  - simp getr =Geoff=
@@ -77,10 +77,10 @@ bakes an "AMI" or appropriate server-image from a new rails +nginx server.
 %+ In a command
  - simp install [getr =Geoff=] rails
 
-# + Get a server and install software
-#  - simp getr =Geoff= // install rails
+// + Get a server and install software
+//  - simp getr =Geoff= // install rails
 
-==Load Balance
+###Load Balance
 
 + Build a Rails server and add it to rotation for Load Balance
  - simp lb-add [build rails [+ nginx]]
@@ -89,7 +89,7 @@ bakes an "AMI" or appropriate server-image from a new rails +nginx server.
 + Pull specific server out of load balance
  - simp lb-remove [get =john=]
 
-==Baking Servers
+###Baking Servers
 
 + Bake an AMI from a server config
  - simp bake =Shep Rails= [build rails [+ nginx]]
@@ -98,21 +98,21 @@ bakes an "AMI" or appropriate server-image from a new rails +nginx server.
 + Add another server to Load Balance
  - simp lb add [launch =Shep Rails=]
 
-=="Tasks"
-# TODO -- This is a little tricky
+###"Tasks"
+// TODO -- This is a little tricky
  - simp tasks create install:get_movie <<-EOF
   wget http://my.movie.com/movie.mpg
 EOF
  - simp tasks edit install:get_movie
  - simp tasks list
 
-==More Complicated Servers
+###More Complicated Servers
 + Build a complicated server
  - simp build rails [+ nginx [mod passenger]] [+ emacs] [+ git] [+ free_image] [+ wkhtmltopdf] [+ mudraw]
 + Getting More Complicated
  - simp build rails [+ ruby 1.9.3] [+ nginx [mod passenger 3.0.13]] [+ emacs] [+ git] [+ free_image] [+ wkhtmltopdf] [+ mudraw] [+ cron =0 0 0 0 0 echo \"Hello\"=]
 
-==Custom Build Types
+###Custom Build Types
 + Set Custom Build-Types
  - simp buildtype shep_rail rails [+ nginx [mod passenger]] [+ emacs git free_image wkhtmltopdf mudraw]
 + Run build type
@@ -120,7 +120,7 @@ EOF
 + Bake build type
  - simp bake [build shep_rails]
 
-==Rings
+###Rings
 + Create a new ring
  - simp ring-create staging
 %+ List all rings
@@ -137,7 +137,7 @@ EOF
 + Add a database to a ring
  - simp [ring geoff] add [build mysql]
 + Create a ring with a rails server and a database
-# TODO: Better chaining
+// TODO: Better chaining
  - simp [ring-create staging] lb-add [build rails [mod ruby 1.9.2]] [build mysql]
 + Create a ring with 2 rails servers and a database
  - simp [ring-create staging] lb-add [dup [build rails] 2] [build mysql]
@@ -157,11 +157,11 @@ EOF
 %+ List servers in a ring (verbose)
  - simp @staging list v
 
-==Configuration
+###Configuration
 %+ Configure Simp by command-line
  - simp config
 
 + Configure Simp by inputs
- - simp config [set AWS ==]
+ - simp config [set AWS ###]
 
 
